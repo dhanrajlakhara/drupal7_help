@@ -1,4 +1,4 @@
-function workoutmeals_menu_link($variables) {
+function hook_menu_link($variables) {
   //print_r($variables['element']['#href']);
   if($variables['element']['#href'] == 'cart') {
     //$variables['element']['#attributes']['class'][] = 'cart';
