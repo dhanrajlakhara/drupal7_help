@@ -1,0 +1,41 @@
+function workoutmeals_menu_link($variables) {
+  //print_r($variables['element']['#href']);
+  if($variables['element']['#href'] == 'cart') {
+    //$variables['element']['#attributes']['class'][] = 'cart';
+    $variables['element']['#localized_options']['attributes']['class'][] = "cart";
+    $variables['options']['html'] = TRUE;
+    if (user_is_logged_in()) {
+      if ( wm_plans_order_total() ) {
+        $variables['element']['#title'] =  'Cart -' . wm_plans_order_total();
+      }
+    }
+    if(!user_is_logged_in()) {
+      if ( wm_plans_order_total() ) {
+        $variables['element']['#title'] =  'Cart -' . wm_plans_order_total();
+      }
+      else {
+        $variables['element']['#attributes']['class'][] = 'cart-icon';
+        $variables['element']['#title'] = 'Cart';
+      }
+    }
+  }
+  if($variables['element']['#href'] == 'user') {
+     if(!user_is_logged_in()) {
+      $variables['element']['#attributes']['class'][] = 'hide';
+    }
+  }
+  // Check for foundation icons class and remove link text
+  /*
+  if(is_array($variables['element']['#localized_options']) &&
+    array_key_exists('attributes', $variables['element']['#localized_options']) &&
+    array_key_exists('class', $variables['element']['#localized_options']['attributes'])) {
+
+    foreach($variables['element']['#localized_options']['attributes']['class'] as $key => $class) {
+      if(strpos($class, 'fi-') !== false) {
+        $variables['element']['#title'] = NULL;
+      }
+    }
+  }
+  */
+  return theme_menu_link($variables);
+}
